@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Input Sans';
+  src: url('/fonts/fonnts.com-InputSans.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Input Sans';
+  src: url('/fonts/fonnts.com-InputSansMedium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Input Sans';
+  src: url('/fonts/fonnts.com-InputSansBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+} 
