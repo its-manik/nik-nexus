@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, MenuIcon } from "lucide-react";
 import LoadingState from "./LoadingState";
@@ -6,7 +6,7 @@ import ErrorState from "./ErrorState";
 import EmptyState from "./EmptyState";
 import Navbar from "./Navbar";
 import { boolean } from "zod";
-import BannerVideo from "../assets/banner.mp4"
+import BannerVideo from "../assets/banner.mp4";
 import DarkModeToggle from "./DarkModeToggle";
 
 interface PageLayoutProps {
@@ -36,25 +36,38 @@ function PageLayout({
 }: PageLayoutProps) {
   const [open, setOpen] = useState<boolean>(false);
 
+  const vidRef = useRef();
+
+  useEffect(() => {
+    vidRef.current.play();
+  }, []);
+
   return (
     <>
       <Navbar setOpen={setOpen} open={open} />
-        {/* Dark Mode Toggle */}
-      <div className={`fixed ${open ? "left-48" : "left-4"} bottom-4  md:left-48 z-[100]`}>
+      {/* Dark Mode Toggle */}
+      <div
+        className={`fixed ${
+          open ? "left-48" : "left-4"
+        } bottom-4  md:left-48 z-[100]`}
+      >
         <DarkModeToggle />
       </div>
       <div className="p-2 md:p-8 md:ml-64 ml-0 overflow-x-auto">
         <MenuIcon
-          className={`ml-2 mt-2 size-8 cursor-pointer ${!open ? "opacity-100" : "opacity-0"} md:hidden`}
+          className={`ml-2 mt-2 size-8 cursor-pointer ${
+            !open ? "opacity-100" : "opacity-0"
+          } md:hidden`}
           onClick={() => setOpen((prevState) => !prevState)}
         />
         <div className="mb-8 relative h-[30rem] overflow-hidden rounded-xl mt-4">
           {/* Video Banner */}
           <video
-            src={BannerVideo}
+            ref={vidRef}     
             autoPlay
             muted
             loop
+            controls={false}
             className="w-full h-[20rem] md:h-[30rem] absolute z-10 "
             height="100%"
             width="100%"
@@ -63,7 +76,9 @@ function PageLayout({
               backgroundSize: "cover !important",
               backgroundRepeat: "no-repeat !important",
             }}
-          ></video>
+          >
+            <source src={BannerVideo} type="video/mp4" />
+          </video>
 
           <div className="flex flex-col z-30 p-8">
             {backLink && (
@@ -81,7 +96,7 @@ function PageLayout({
                   <Icon className={iconClassName} />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-semibold text-white dark:text-text-dark">
+                  <h1 className="text-xl md:text-2xl font-semibold text-white dark:text-text-dark">
                     {title}
                   </h1>
                   {subtitle && (
@@ -91,9 +106,9 @@ function PageLayout({
                   )}
                 </div>
               </div>
-              {actions && <div>{actions}</div>}
+              {actions && <div className="text-white">{actions}</div>}
             </div>
-        </div>
+          </div>
         </div>
 
         {loading ? (
